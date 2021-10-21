@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebLearningProj.Models;
 using WebLearningProj.StudentData;
 
 namespace WebLearningProj
@@ -27,7 +29,8 @@ namespace WebLearningProj
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IStudentData, MockStudentData>();
+            services.AddDbContextPool<StudentContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StudentsContextConnectionString")));
+            services.AddScoped<IStudentData, NpgSqlStudentData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

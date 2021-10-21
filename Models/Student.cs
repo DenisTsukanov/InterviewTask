@@ -8,9 +8,12 @@ namespace WebLearningProj.Models
 {
     public class Student
     {
+        [Key]
         public int Id { get; set; }
-        public string Surname { get; set; }
+        [Required]
+        [MaxLength(50,ErrorMessage = "Name can't be longer than 50 characters")]
         public string Name { get; set; }
+        public string Surname { get; set; }
         //public string Patronymic { get; set; }
         //public string Group { get; set; }
         //public DateTime EnrollmentDate { get; set; }
