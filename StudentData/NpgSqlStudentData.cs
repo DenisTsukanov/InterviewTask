@@ -8,8 +8,8 @@ namespace WebLearningProj.StudentData
 {
     public class NpgSqlStudentData : IStudentData
     {
-        private StudentContext _studentContext;
-        public NpgSqlStudentData(StudentContext studentContext)
+        private ApplicationContext _studentContext;
+        public NpgSqlStudentData(ApplicationContext studentContext)
         {
             _studentContext = studentContext;
         }
@@ -32,6 +32,7 @@ namespace WebLearningProj.StudentData
             if(existing_student != null)
             {
                 existing_student.Name = student.Name;
+                existing_student.Surname = student.Surname;
                 _studentContext.Students.Update(existing_student);
                 _studentContext.SaveChanges();
             }

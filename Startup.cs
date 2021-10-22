@@ -29,7 +29,7 @@ namespace WebLearningProj
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContextPool<StudentContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StudentsContextConnectionString")));
+            services.AddDbContextPool<ApplicationContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StudentsContextConnectionString")));
             services.AddScoped<IStudentData, NpgSqlStudentData>();
         }
 
