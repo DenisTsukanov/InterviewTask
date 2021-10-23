@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebLearningProj.Data.ScheduleData;
+using WebLearningProj.Data.TeacherData;
+using WebLearningProj.DictionaryData;
 using WebLearningProj.Models;
 using WebLearningProj.StudentData;
 
@@ -31,6 +34,9 @@ namespace WebLearningProj
             services.AddControllers();
             services.AddDbContextPool<ApplicationContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StudentsContextConnectionString")));
             services.AddScoped<IStudentData, NpgSqlStudentData>();
+            services.AddScoped<IDictionaryData, NpgSqlDictionaryData>();
+            services.AddScoped<ITeacherData, NpgSqlTeacherData>();
+            services.AddScoped<IScheduleData, NpgSqlScheduleData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

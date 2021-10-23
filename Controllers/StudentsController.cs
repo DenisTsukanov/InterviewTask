@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebLearningProj.DictionaryData;
 using WebLearningProj.Models;
 using WebLearningProj.StudentData;
 
@@ -13,9 +14,11 @@ namespace WebLearningProj.Controllers
     public class StudentsController : ControllerBase
     {
         private IStudentData _studentData;
-        public StudentsController(IStudentData studentData)
+        private IDictionaryData _dictionaryData;
+        public StudentsController(IStudentData studentData, IDictionaryData dictionaryData)
         {
             _studentData = studentData;
+            _dictionaryData = dictionaryData;
         }
         [HttpGet]
         [Route("api/[controller]")]
@@ -40,8 +43,13 @@ namespace WebLearningProj.Controllers
         [Route("api/[controller]")]
         public IActionResult AddStudent(Student student)
         {
-            _studentData.AddStudent(student);
-            return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + student.Id,student);
+            var typeOfStudying = _dictionaryData.GetTypeOfStudying(student.TypeOfStudyingId);
+            if (typeOfStudying != null)
+            {
+                _studentData.AddStudent(student);
+                return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + student.Id, student);
+            }
+            return NotFound($"The typeOfStudying with Id: {student.TypeOfStudyingId} was not found");
         }
         [HttpDelete]
         [Route("api/[controller]/{id}")]
@@ -62,9 +70,14 @@ namespace WebLearningProj.Controllers
             var _student = _studentData.GetStudent(id);
             if (_student != null)
             {
-                student.Id = _student.Id;
-                _studentData.EditStudent(student);
-                return Ok();
+                var _typeOfStudying = _dictionaryData.GetTypeOfStudying(student.TypeOfStudyingId);
+                if(_typeOfStudying != null)
+                {
+                    student.Id = _student.Id;
+                    _studentData.EditStudent(student);
+                    return Ok();
+                }
+                return NotFound($"The typeOfStudyingID with Id: {student.TypeOfStudyingId} was not found");
             }
             return NotFound($"The student with Id: {id} was not found");
         }
