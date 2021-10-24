@@ -21,9 +21,9 @@ namespace WebLearningProj.Controllers
         }
         [HttpGet]
         [Route("api/[controller]")]
-        public IActionResult GetSchedule()
+        public IActionResult GetSchedule(string group)
         {
-            return Ok(_scheduleData.GetSchedule());
+            return Ok(_scheduleData.GetSchedule(group));
         }
     }
 }

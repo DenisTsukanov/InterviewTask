@@ -22,9 +22,9 @@ namespace WebLearningProj.Controllers
         }
         [HttpGet]
         [Route("api/[controller]")]
-        public IActionResult GetStudents()
+        public IActionResult GetStudents([FromQuery] string group, [FromQuery] string surname, [FromQuery] string isExpelled)
         {
-            return Ok(_studentData.GetStudents());
+            return Ok(_studentData.GetStudents(group,surname,isExpelled));
         }
         [HttpGet]
         [Route("api/[controller]/{id}")]

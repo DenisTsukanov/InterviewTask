@@ -9,5 +9,6 @@ namespace WebLearningProj.Data.ScheduleData
     public interface IScheduleData
     {
         public List<Schedule> GetSchedule();
+        public List<Schedule> GetSchedule(string group);
     }
 }

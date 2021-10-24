@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WebLearningProj.Models;
 
 namespace WebLearningProj.StudentData
@@ -29,7 +27,7 @@ namespace WebLearningProj.StudentData
         public Student EditStudent(Student student)
         {
             var existing_student = _applicationContext.Students.Find(student.Id);
-            if(existing_student != null)
+            if (existing_student != null)
             {
                 existing_student.Name = student.Name;
                 existing_student.Surname = student.Surname;
@@ -53,6 +51,34 @@ namespace WebLearningProj.StudentData
         public List<Student> GetStudents()
         {
             return _applicationContext.Students.ToList();
+        }
+
+        public List<Student> GetStudents(string group, string surname, string isExpelled)
+        {
+            List<Student> studentsList = new List<Student>();
+            if (string.IsNullOrWhiteSpace(group) && string.IsNullOrWhiteSpace(surname) && string.IsNullOrWhiteSpace(isExpelled))
+            {
+                return GetStudents();
+            }
+            if (!string.IsNullOrWhiteSpace(group))
+            {
+                group = group.Trim();
+                studentsList = _applicationContext.Students.Where(x => x.Group == group).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(surname))
+            {
+                surname = surname.Trim();
+                studentsList = _applicationContext.Students.Where(x => x.Surname == surname).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(isExpelled))
+            {
+                isExpelled = isExpelled.Trim();
+                if (isExpelled.ToLower()=="true" || isExpelled.ToLower() == "false")
+                {
+                    studentsList = _applicationContext.Students.Where(x => x.IsExpelled == bool.Parse(isExpelled)).ToList();
+                }
+            }
+            return studentsList;
         }
     }
 }

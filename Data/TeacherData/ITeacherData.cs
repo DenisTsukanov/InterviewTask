@@ -8,7 +8,7 @@ namespace WebLearningProj.Data.TeacherData
 {
     public interface ITeacherData
     {
-        List<Teacher> GetTeachers();
+        List<Teacher> GetTeachers(string scienceDegree,string surname,string subject);
         Teacher GetTeacher(int id);
         Teacher AddTeacher(Teacher teacher);
         void DeleteTeacher(Teacher teacher);

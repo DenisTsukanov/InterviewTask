@@ -23,5 +23,7 @@ namespace WebLearningProj.Models
         public Teacher Teacher { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
+        [Required]
+        public string Group { get; set; }
     }
 }

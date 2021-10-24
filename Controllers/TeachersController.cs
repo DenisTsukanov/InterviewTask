@@ -22,9 +22,9 @@ namespace WebLearningProj.Controllers
         }
         [HttpGet]
         [Route("api/[controller]")]
-        public IActionResult GetTeachers()
+        public IActionResult GetTeachers([FromQuery] string scienceDegree, [FromQuery] string surname, [FromQuery] string subject)
         {
-            return Ok(_teacherData.GetTeachers());
+            return Ok(_teacherData.GetTeachers(scienceDegree,surname,subject));
         }
         [HttpPost]
         [Route("api/[controller]")]

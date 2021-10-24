@@ -17,5 +17,15 @@ namespace WebLearningProj.Data.ScheduleData
         {
             return _applicationContext.Schedules.ToList();
         }
+
+        public List<Schedule> GetSchedule(string group)
+        {
+            if (string.IsNullOrWhiteSpace(group))
+            {
+                return GetSchedule();
+            }
+            group = group.Trim();
+            return _applicationContext.Schedules.Where(x => x.Group == group).ToList();
+        }
     }
 }
